@@ -1,0 +1,250 @@
+.wrap {
+  background: linear-gradient(160deg, var(--leather), var(--bg-alt));
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 60px;
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 50px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .wrap {
+    grid-template-columns: 1fr;
+    padding: 36px 26px;
+    gap: 34px;
+  }
+}
+
+/* Coluna da esquerda (eyebrow + título + subtítulo) */
+.intro {
+  position: sticky;
+  top: calc(var(--header-h) + 24px);
+}
+
+@media (max-width: 900px) {
+  .intro {
+    position: static;
+  }
+}
+
+.title {
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  margin: 14px 0 16px;
+}
+
+.sub {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-weight: 600;
+  color: var(--text-dim);
+  font-size: 1.05rem;
+  max-width: 420px;
+  margin-top: 3px;
+}
+
+/* Coluna da direita (formulário) */
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.field {
+  margin-bottom: 18px;
+}
+
+.field label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  background: rgba(20, 16, 13, 0.6);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--cream);
+  padding: 13px 14px;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  transition: border-color var(--dur-fast);
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: var(--oxblood-text);
+  outline: none;
+}
+
+/* Borda vermelha em campos com erro (aria-invalid setado pelo componente) */
+.field input[aria-invalid="true"],
+.field select[aria-invalid="true"] {
+  border-color: var(--oxblood-text);
+}
+
+.field textarea {
+  resize: vertical;
+}
+
+/* ===== Select de serviços =====
+   `appearance: none` tira o controle nativo (que vinha com a setinha cinza do
+   sistema) para desenharmos a nossa seta.
+
+   `color-scheme: dark` é o que resolve a LISTA aberta: o popup de um <select>
+   é desenhado pelo sistema operacional e não aceita nosso CSS de layout, mas
+   respeita este hint e passa a renderizar em tema escuro — sem ele a lista
+   abria branca/cinza no meio de um site preto. */
+.field select {
+  /* Chevron compartilhado: vai como background-image no fallback e como mask
+     no ::picker-icon. O traço em brass serve aos dois — numa máscara só o
+     canal alfa importa, a cor é ignorada. */
+  --chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none' stroke='%23c79a6b' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5'/%3E%3C/svg%3E");
+
+  -webkit-appearance: none;
+  appearance: none;
+  color-scheme: dark;
+  cursor: pointer;
+  padding-right: 42px;
+  background-image: var(--chevron);
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+}
+
+/* Cores das opções dentro do popup. Funciona no Chrome e Firefox em
+   Windows/Linux; no macOS e no iOS o sistema ignora e usa o tema dele. */
+.field select option {
+  background-color: var(--bg-alt);
+  color: var(--cream);
+}
+
+.field select option:disabled {
+  color: var(--text-dim);
+}
+
+/* Enquanto o placeholder está selecionado, o texto fica esmaecido como um
+   placeholder de input de verdade. */
+.field select:has(option[value=""]:checked) {
+  color: var(--text-dim);
+}
+
+/* ===== Popup totalmente estilizado (Chrome 135+) =====
+   Com `appearance: base-select` o <select> deixa de ser um controle do sistema
+   e passa a ser desenhado pelo navegador, o que libera o ::picker(select) — aí
+   a lista aberta aceita nosso CSS de verdade (fundo, borda, sombra, hover).
+   Fica dentro de @supports: quem não tem isso continua com o tema escuro do
+   color-scheme acima, que é o fallback. */
+@supports (appearance: base-select) {
+  .field select,
+  .field select::picker(select) {
+    appearance: base-select;
+  }
+
+  /* base-select traz estilos próprios; realinho o botão com os outros campos */
+  .field select {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 13px 14px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background-color: rgba(20, 16, 13, 0.6);
+    background-image: none; /* a seta agora vem do ::picker-icon */
+  }
+
+  /* Troca o triângulo padrão do base-select pelo mesmo chevron do fallback.
+     Uso mask em vez de background para a cor continuar vindo do token. */
+  .field select::picker-icon {
+    content: "";
+    width: 12px;
+    height: 8px;
+    background-color: var(--brass);
+    -webkit-mask: var(--chevron) no-repeat center / contain;
+    mask: var(--chevron) no-repeat center / contain;
+    transition: transform var(--dur-fast) var(--ease);
+  }
+
+  .field select:open::picker-icon {
+    transform: rotate(180deg);
+  }
+
+  /* A lista em si. `position-area: block-end` ancora abaixo do campo — sem
+     isso o Chrome abria por cima e cobria o rótulo "SERVIÇO". O flip-block
+     ainda deixa ela subir se realmente faltar espaço na viewport. */
+  .field select::picker(select) {
+    position-area: block-end span-inline-end;
+    /* `position-try-fallbacks: none` é proposital: o padrão do Chrome é
+       flip-block, que jogava a lista para cima e cobria o rótulo do campo
+       mesmo havendo espaço embaixo. O max-height abaixo garante que ela caiba. */
+    position-try-fallbacks: none;
+    max-height: min(300px, 45vh);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    margin-top: 6px;
+    padding: 6px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--bg-alt);
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.5);
+  }
+
+  .field select option {
+    padding: 11px 12px;
+    border-radius: var(--radius);
+    background: transparent;
+    color: var(--text-dim);
+    font-size: 0.92rem;
+  }
+
+  .field select option:hover,
+  .field select option:focus {
+    background: var(--leather);
+    color: var(--cream);
+    outline: none;
+  }
+
+  .field select option:checked {
+    color: var(--brass);
+  }
+
+  .field select option::checkmark {
+    color: var(--brass);
+  }
+
+  /* O placeholder só faz sentido no botão fechado, não como item da lista */
+  .field select option[value=""] {
+    display: none;
+  }
+}
+
+.error {
+  display: block;
+  margin-top: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--oxblood-text);
+}
+
+/* Botão de envio: aparência na `.btn` global; largura via `btn--block`
+   e o estado desabilitado via `.btn:disabled`. */
+
+.success {
+  margin-top: 14px;
+  padding: 14px 16px;
+  border: 1px solid var(--brass);
+  border-radius: var(--radius);
+  background: rgba(199, 154, 107, 0.08);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  line-height: 1.7;
+  color: var(--brass);
+}

@@ -1,0 +1,76 @@
+/*  OLD SCHOOL BARBER — DESIGN TOKENS */
+
+:root {
+  /* Superficies */
+  --bg: #14100d;
+  --bg-alt: #1c1611;
+  --leather: #1a2230;
+  --leather-light: #232d3f;
+
+  /* Text */
+  --cream: #e8e2d4;
+  --text: #e8e2d4;
+  --text-dim: #a3a49f;
+
+  /* Estruturais bordas, botões ghost, ícones neutros) ---- */
+  --navy: #28425f;
+  --navy-light: #3a5c82;
+
+  /* Ação principal CTAs, hovers de destaque, badges ---- */
+  --oxblood: #7a2530;
+  --oxblood-light: #9c3542;
+  /* Versão clara do oxblood para TEXTO. O --oxblood-light tem só 2.7:1 sobre
+     os fundos escuros (reprova WCAG AA); este passa com 5.8:1. Use este em
+     qualquer texto/ícone vermelho, e o --oxblood-light apenas em fundos. */
+  --oxblood-text: #d4707c;
+
+  /* Acento minoritário — usar só em detalhes pequenos ---- */
+  --brass: #c79a6b;
+
+  /* Cor do anel de foco. O --navy-light dá 2.7:1 e reprova o mínimo de 3:1
+     exigido pela WCAG 2.2 para indicadores de foco; o brass dá 7.4:1. */
+  --focus-ring: var(--brass);
+
+  /* Linhas */
+  --line: rgba(160, 180, 200, 0.16);
+
+  /* Tipografia */
+  --font-display: "Bebas Neue", sans-serif;
+  --font-accent: "Playfair Display", serif;
+  --font-body: "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  /* Layout */
+  --radius: 2px;
+  --container-max: 1180px;
+  --container-pad: 24px;
+
+  /* Altura do header fixo. Usada pelo scroll-padding-top do html para as
+     âncoras não pararem atrás do header. */
+  --header-h: 94px;
+
+  /* Motion */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --dur-fast: 0.25s;
+  --dur-base: 0.35s;
+  --dur-slow: 0.5s;
+
+  /* Espaçamento de seção */
+  --section-pad: 110px;
+  --section-pad-mobile: 76px;
+}
+
+/* Respeita quem desativa animações no sistema — aplica em todo o projeto.
+   IMPORTANTE: esta regra fica FORA do :root. Aninhada dentro dele, o CSS
+   nesting transformava `*` em `:root *`, que exclui o próprio <html> — e era
+   justamente o <html> que carregava o scroll-behavior: smooth. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

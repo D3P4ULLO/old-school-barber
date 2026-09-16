@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Poste de barbearia, em três formatos porque nenhum cobre todos os alvos:
+         o SVG escala sem perda e é o preferido por Chrome/Edge/Firefox; o .ico
+         (16/32/48) atende Safari e navegadores antigos, que ignoram favicon SVG;
+         o PNG 180x180 é o ícone de tela inicial do iOS.
+         O ?v= é cache-busting: o navegador guarda favicons num banco próprio que
+         ignora até o reload forçado. Suba o número ao trocar o desenho. -->
+    <link rel="icon" href="/favicon.ico?v=3" sizes="32x32" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=3" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Fontes do projeto (Bebas Neue, Playfair Display, Inter, JetBrains Mono).
+         Sem estes links, as variáveis --font-* caem no fallback sans-serif.
+         O preload da folha antecipa o download e reduz o layout shift causado
+         pela troca da fonte de fallback pela definitiva. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Fallback de título; o React 19 sobrescreve com a tag <title> do App.tsx -->
+    <title>Old School Barber — Mais do que um corte. Um estilo.</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,5 @@
+# Old School Barber
+User-agent: *
+Allow: /
+
+Sitemap: https://oldschoolbarber.com.br/sitemap.xml

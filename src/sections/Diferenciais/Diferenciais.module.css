@@ -1,0 +1,62 @@
+.head {
+  margin-bottom: 56px;
+}
+
+.title {
+  font-size: clamp(2rem, 4.5vw, 3.5rem);
+  margin-top: 14px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 26px;
+}
+
+@media (max-width: 980px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  background: var(--leather);
+  border: 1px solid var(--line);
+  padding: 36px 26px;
+  border-radius: var(--radius);
+  height: 100%;
+  transition:
+    border-color var(--dur-base),
+    background var(--dur-base);
+}
+
+/* O translateY do hover mora no whileHover do Framer Motion (Diferenciais.tsx),
+   não aqui: o Motion escreve `transform` inline no card e um :hover em CSS
+   nunca ganharia dele. */
+.card:hover {
+  border-color: var(--oxblood);
+  background: var(--leather-light);
+}
+
+.icon {
+  width: 46px;
+  height: 46px;
+  margin-bottom: 22px;
+  color: var(--brass);
+}
+
+.cardTitle {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+}
+
+.cardText {
+  color: var(--text-dim);
+  font-size: 0.92rem;
+}

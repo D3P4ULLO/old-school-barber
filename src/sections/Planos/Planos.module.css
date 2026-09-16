@@ -1,0 +1,126 @@
+.head {
+  margin-bottom: 56px;
+}
+
+.title {
+  font-size: clamp(2rem, 4.5vw, 3.4rem);
+  margin-top: 14px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
+  align-items: stretch;
+}
+
+@media (max-width: 920px) {
+  .grid {
+    grid-template-columns: 1fr;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+}
+
+.card {
+  border: 1px solid var(--line);
+  padding: 38px 30px;
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-alt);
+  /* A altura vem do `align-items: stretch` do grid — nada de height: 100%,
+     senão a margem negativa do card em destaque abriria um buraco embaixo. */
+}
+
+/* Plano em destaque (Premium): fundo em couro, borda oxblood e o card
+   "saltando" para fora da linha.
+   O salto vem de margem negativa, NÃO de transform: scale() — o Framer Motion
+   escreve `transform` inline neste card (animação de entrada) e sobrescreveria
+   qualquer scale vindo do CSS. */
+.featured {
+  background: linear-gradient(165deg, var(--leather-light), var(--leather));
+  /* Borda no tom claro do oxblood: o halo abaixo precisa parecer emanar
+     dela, e a versão escura lia como contorno apagado com brilho solto. */
+  border-color: var(--oxblood-light);
+  margin-block: -18px;
+  padding: 50px 30px;
+  /* Elevação + halo. Os raios são bem mais largos e mais fracos que os do
+     `.btn--glow`: numa área grande o mesmo valor viraria mancha, e o botão
+     dentro do card tem de continuar sendo o ponto mais aceso — ele é a
+     ação, a borda é só o destaque. */
+  box-shadow:
+    0 18px 44px rgba(0, 0, 0, 0.45),
+    0 0 24px -4px rgba(156, 53, 66, 0.4),
+    0 0 60px -10px rgba(156, 53, 66, 0.28);
+  position: relative;
+}
+
+/* No mobile o salto atrapalha o alinhamento — volto ao padrão. O halo fica:
+   sem a elevação, é ele que passa a marcar qual plano é o escolhido. */
+@media (max-width: 920px) {
+  .featured {
+    margin-block: 0;
+    padding: 38px 30px;
+    box-shadow:
+      0 0 20px -4px rgba(156, 53, 66, 0.4),
+      0 0 52px -10px rgba(156, 53, 66, 0.26);
+  }
+}
+
+.badge {
+  position: absolute;
+  top: -1px;
+  right: 20px;
+  background: var(--oxblood);
+  color: var(--cream);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  border-radius: 0 0 4px 4px;
+}
+
+.name {
+  font-size: 1.5rem;
+}
+
+.price {
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  color: var(--brass);
+  margin: 14px 0 6px;
+  line-height: 1;
+}
+
+.price span {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-dim);
+}
+
+.features {
+  margin: 24px 0 30px;
+  flex: 1;
+}
+
+.features li {
+  display: flex;
+  gap: 10px;
+  font-size: 0.88rem;
+  color: var(--text-dim);
+  margin-bottom: 12px;
+  align-items: flex-start;
+}
+
+.features svg {
+  width: 15px;
+  height: 15px;
+  color: var(--navy-light);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* Botões: aparência na classe global `.btn` (global.css). O card usa
+   `btn--primary` no plano em destaque e `btn--ghost` nos demais. */

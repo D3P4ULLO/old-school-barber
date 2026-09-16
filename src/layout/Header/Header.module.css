@@ -1,0 +1,137 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 22px 0;
+  border-bottom: 1px solid transparent;
+  transition:
+    background var(--dur-base) var(--ease),
+    padding var(--dur-base) var(--ease),
+    border-color var(--dur-base) var(--ease);
+}
+
+/* Estado após rolar: fundo sólido translúcido + blur + borda sutil */
+.scrolled {
+  background: rgba(20, 16, 13, 0.92);
+  backdrop-filter: blur(10px);
+  padding: 14px 0;
+  border-color: var(--line);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  letter-spacing: 0.06em;
+}
+
+.logoAccent {
+  color: var(--oxblood-text);
+}
+
+.seal {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1.5px solid var(--brass);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--brass);
+}
+
+.navList {
+  display: flex;
+  gap: 34px;
+}
+
+.navLink {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  position: relative;
+  padding-bottom: 6px;
+  transition: color var(--dur-fast);
+}
+
+/* Sublinhado que cresce da esquerda no hover */
+.navLink::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 1px;
+  background: var(--oxblood-light);
+  transition: width 0.3s var(--ease);
+}
+
+.navLink:hover {
+  color: var(--cream);
+}
+
+.navLink:hover::after {
+  width: 100%;
+}
+
+/* A aparência do botão vem da classe global `.btn` (global.css). Esta
+   classe existe só para a media query abaixo poder escondê-lo. */
+
+/* A nav e o CTA desktop somem no mobile — o menu mobile (próximo passo)
+   assume o lugar. Deixo o breakpoint pronto desde já. */
+@media (max-width: 920px) {
+  .nav,
+  .cta {
+    display: none;
+  }
+}
+
+/* ===== Botão hambúrguer (mobile) ===== */
+.burger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  width: 28px;
+  position: relative;
+  z-index: 1003;
+}
+
+.burger span {
+  height: 2px;
+  width: 100%;
+  background: var(--cream);
+  transition:
+    transform var(--dur-fast) var(--ease),
+    opacity var(--dur-fast);
+}
+
+/* Animação do ícone: vira um "X" quando o menu abre */
+.burgerLineTop {
+  transform: translateY(7px) rotate(45deg);
+}
+.burgerLineMid {
+  opacity: 0;
+}
+.burgerLineBot {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+@media (max-width: 920px) {
+  .burger {
+    display: flex;
+  }
+}

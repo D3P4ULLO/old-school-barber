@@ -1,0 +1,60 @@
+.head {
+  margin-bottom: 56px;
+}
+
+.title {
+  font-size: clamp(2rem, 4.5vw, 3.4rem);
+  margin-top: 14px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 40px;
+}
+
+@media (max-width: 860px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.mapWrap {
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+}
+
+.map {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  /* Ajusta o mapa (claro por padrão) ao tema escuro do site sem precisar da API paga de estilo: Inverte e recolore. Não é perfeito, mas integra visualmente melhor */
+  filter: invert(0.9) hue-rotate(180deg) brightness(0.95) contrast(0.9);
+}
+
+.hours {
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 30px;
+  background: var(--bg);
+}
+
+.hours li {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.9rem;
+}
+
+.hours li:last-child {
+  border-bottom: none;
+}
+
+.day {
+  color: var(--text-dim);
+  font-weight: 600;
+}

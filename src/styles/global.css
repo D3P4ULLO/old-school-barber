@@ -1,0 +1,295 @@
+/* ===================================================================
+   OLD SCHOOL BARBER — GLOBAL STYLES
+   Estilos de base aplicados no documento inteiro. Import order em
+   main.tsx: reset.css -> tokens.css -> global.css
+=================================================================== */
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  line-height: 1.02;
+}
+
+/* Container padrão usado por todas as seções */
+.container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--container-pad);
+}
+
+/* Espaçamento vertical padrão de seção */
+.section-pad {
+  padding: var(--section-pad) 0;
+}
+
+@media (max-width: 768px) {
+  .section-pad {
+    padding: var(--section-pad-mobile) 0;
+  }
+}
+
+/* Label pequeno em mono, usado no topo de cada seção (ex: "Menu de serviços") */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--brass);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 22px;
+  height: 1px;
+  background: var(--brass);
+  display: inline-block;
+}
+
+/* ===================================================================
+   BOTÕES
+   Fonte única para todos os CTAs do site. Antes cada seção redeclarava
+   o mesmo bloco (Header, MobileMenu, StickyMobileCTA, Hero, Planos,
+   Contato) — seis cópias que saíam de sincronia.
+
+   Referência material: placa de sinalização esmaltada com ferragem de
+   latão, mesmo vocabulário do poste do favicon. Uma placa dessas tem a
+   face levemente convexa (pega mais luz em cima), um filete gravado
+   para dentro da borda, e é parafusada na parede — então projeta
+   sombra. É daí que vem a profundidade, não de um efeito genérico.
+=================================================================== */
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 15px 28px;
+  border-radius: var(--radius);
+  border: 0;
+  cursor: pointer;
+  /* O texto não pode ser selecionado no meio de um clique: atrapalha a
+     leitura do press e deixa o botão com cara de bloco de texto.
+     O prefixo -webkit é exigido pelo Safari, inclusive no iOS. */
+  -webkit-user-select: none;
+  user-select: none;
+  transition:
+    transform var(--dur-fast) var(--ease),
+    box-shadow var(--dur-fast) var(--ease),
+    background-color var(--dur-fast),
+    border-color var(--dur-fast);
+}
+
+/* O filete de latão. Fica num ::before embutido para poder existir a
+   3px da borda — uma `border` comum só desenha na aresta. */
+.btn::before {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border-radius: 1px;
+  pointer-events: none;
+  transition: border-color var(--dur-fast);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+/* ---- Primário: a placa esmaltada ---- */
+.btn--primary {
+  /* Face quase fosca. Esmalte não é lustroso: um gradiente visível puxa
+     o botão para o lustro de 2008. Aqui a variação é de ~3%, e quem faz
+     o relevo são os dois fios internos — luz no bevel de cima, sombra
+     no de baixo. */
+  background: linear-gradient(180deg, #7f2833 0%, #74222c 100%);
+  color: var(--cream);
+  box-shadow:
+    inset 0 1px 0 rgba(232, 226, 212, 0.16),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.3),
+    0 1px 0 rgba(0, 0, 0, 0.55),
+    0 5px 14px -8px rgba(0, 0, 0, 0.75);
+}
+
+/* Filete baixo de propósito: é ferragem, não contorno. Deve ser
+   percebido de perto, não visto de longe. */
+.btn--primary::before {
+  border: 1px solid rgba(199, 154, 108, 0.12);
+}
+
+/* Hover = a placa se descola da parede. Sobe 1px e a sombra cresce
+   junto; é o par que lê como levantar. A face mal muda — o que muda é
+   a luz batendo no bevel e o latão acordando. */
+.btn--primary:hover {
+  background: linear-gradient(180deg, #852a36 0%, #7a2530 100%);
+  transform: translateY(-1px);
+  box-shadow:
+    inset 0 1px 0 rgba(232, 226, 212, 0.24),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.3),
+    0 2px 0 rgba(0, 0, 0, 0.55),
+    0 10px 20px -8px rgba(0, 0, 0, 0.8);
+}
+
+.btn--primary:hover::before {
+  border-color: rgba(199, 154, 108, 0.3);
+}
+
+/* Press = a placa afunda. A luz interna inverte (agora a sombra vem de
+   cima) e a projetada some, porque o botão encostou. */
+.btn--primary:active {
+  transform: translateY(1px);
+  background: #6d1f28;
+  box-shadow:
+    inset 0 2px 5px rgba(0, 0, 0, 0.5),
+    inset 0 -1px 0 rgba(232, 226, 212, 0.05),
+    0 0 0 rgba(0, 0, 0, 0);
+}
+
+/* ---- Ghost: a opção calada ----
+   Precisa recuar diante do primário, senão viram dois CTAs disputando.
+   Por isso o latão entra fraco e só acorda no hover. */
+.btn--ghost {
+  background: transparent;
+  color: var(--cream);
+  box-shadow: inset 0 0 0 1px rgba(199, 154, 108, 0.28);
+}
+
+.btn--ghost:hover {
+  /* Lavagem em creme, não em latão: o latão a 9% deixava um marrom
+     encardido sobre o fundo escuro. */
+  background: rgba(232, 226, 212, 0.05);
+  transform: translateY(-1px);
+  box-shadow:
+    inset 0 0 0 1px rgba(199, 154, 108, 0.55),
+    0 8px 18px -10px rgba(0, 0, 0, 0.8);
+}
+
+.btn--ghost:active {
+  transform: translateY(1px);
+  background: rgba(232, 226, 212, 0.03);
+  box-shadow:
+    inset 0 0 0 1px rgba(199, 154, 108, 0.45),
+    inset 0 2px 4px rgba(0, 0, 0, 0.35);
+}
+
+/* ---- Glow ----
+   Halo aceso em volta da placa. Usado só no envio do formulário: é a
+   ação terminal da página, e o brilho marca o fim do caminho.
+
+   Feito com sombras em camadas, não com pseudo-elemento borrado. O
+   overlay radial pediria `z-index: -1`, e o `.btn` ganha `transform` no
+   hover — isso cria contexto de empilhamento, e dentro dele um filho
+   negativo pinta DEPOIS do fundo do próprio elemento. O halo saltaria
+   para a frente e lavaria a face do botão. Sombra sempre pinta por fora.
+
+   Vem depois de `.btn--primary` de propósito: mesma especificidade,
+   quem vence é a última declarada. */
+.btn--glow {
+  box-shadow:
+    inset 0 1px 0 rgba(232, 226, 212, 0.16),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.3),
+    0 1px 0 rgba(0, 0, 0, 0.55),
+    0 4px 12px -6px rgba(0, 0, 0, 0.7),
+    /* Halo em três raios. O card do formulário tem fundo navy, mais
+       claro que a página, e engole brilho — valores calibrados contra
+       ele, não contra o preto do fundo geral.
+       O raio curto usa um tom mais claro porque o núcleo de uma fonte
+       de luz lê mais claro e menos saturado que a sua auréola. */
+      0 0 10px -1px rgba(196, 84, 98, 0.55),
+    0 0 26px 0 rgba(156, 53, 66, 0.6),
+    0 0 58px -4px rgba(156, 53, 66, 0.4);
+}
+
+.btn--glow:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    inset 0 1px 0 rgba(232, 226, 212, 0.24),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.3),
+    0 2px 0 rgba(0, 0, 0, 0.55),
+    0 6px 16px -6px rgba(0, 0, 0, 0.7),
+    0 0 14px -1px rgba(210, 100, 114, 0.7),
+    0 0 36px 2px rgba(156, 53, 66, 0.8),
+    0 0 80px -4px rgba(156, 53, 66, 0.55);
+}
+
+/* No press o halo recolhe junto com a placa: luz que afunda, apaga. */
+.btn--glow:active {
+  transform: translateY(1px);
+  box-shadow:
+    inset 0 2px 5px rgba(0, 0, 0, 0.5),
+    inset 0 -1px 0 rgba(232, 226, 212, 0.05),
+    0 0 12px -4px rgba(156, 53, 66, 0.4);
+}
+
+/* Desabilitado não brilha: o halo é convite, e não há o que convidar
+   enquanto o envio está em curso. */
+.btn--glow:disabled {
+  box-shadow:
+    inset 0 1px 0 rgba(232, 226, 212, 0.16),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.3),
+    0 1px 0 rgba(0, 0, 0, 0.55);
+}
+
+/* ---- Modificadores ---- */
+.btn--block {
+  width: 100%;
+}
+
+.btn--sm {
+  padding: 13px 24px;
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Quem desativa animação no sistema perde o deslocamento, mas mantém a
+   mudança de cor e sombra — o feedback de press continua legível. */
+@media (prefers-reduced-motion: reduce) {
+  .btn:hover,
+  .btn:active {
+    transform: none;
+  }
+}
+
+/* Grain sutil sobreposto — aplicado uma vez, fixo, no App.tsx */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Classe utilitária para o reveal-on-scroll (controlada via Framer Motion
+   nos componentes, mas o estado inicial fica documentado aqui) */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

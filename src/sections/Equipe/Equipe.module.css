@@ -1,0 +1,87 @@
+.head {
+  margin-bottom: 56px;
+}
+
+.title {
+  font-size: clamp(2rem, 4.5vw, 3.4rem);
+  margin-top: 14px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: start;
+  gap: 24px;
+}
+
+@media (max-width: 920px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  text-align: center;
+}
+
+.photo {
+  margin-bottom: 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.name {
+  font-size: 1.15rem;
+  letter-spacing: 0.04em;
+}
+
+.role {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--navy-light);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin: 6px 0 10px;
+}
+
+.desc {
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  margin-bottom: 14px;
+}
+
+.socials {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.social {
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-dim);
+  transition:
+    border-color var(--dur-fast),
+    color var(--dur-fast);
+}
+
+.social:hover {
+  border-color: var(--navy-light);
+  color: var(--cream);
+}
+
+.social svg {
+  width: 15px;
+  height: 15px;
+}

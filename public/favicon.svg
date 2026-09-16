@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <title>Old School Barber</title>
+  <!-- Poste de barbearia. O fundo escuro proprio (token bg do tema) mantem o
+       icone legivel tanto em abas claras quanto escuras. As listras sao
+       paralelogramos explicitos, e nao pattern/patternTransform, porque nem
+       todo renderizador de favicon trata patterns de forma confiavel a 16px.
+       ATENCAO: comentario em XML nao pode conter hifen duplo. Escrever o nome
+       de uma custom property aqui quebra o parse do arquivo inteiro e o
+       navegador passa a exibir o globo generico. -->
+  <rect width="32" height="32" rx="7" fill="#14100d"/>
+
+  <clipPath id="p">
+    <rect x="9.5" y="6" width="13" height="20" rx="2.6"/>
+  </clipPath>
+
+  <g clip-path="url(#p)">
+    <rect x="9.5" y="6" width="13" height="20" fill="#e8e2d4"/>
+    <path d="M-29 26h4.5L-4.5 6h-4.5Z" fill="#7a2530"/>
+    <path d="M-20 26h4.5L4.5 6h-4.5Z" fill="#7a2530"/>
+    <path d="M-11 26h4.5L13.5 6h-4.5Z" fill="#7a2530"/>
+    <path d="M-2 26h4.5L22.5 6h-4.5Z" fill="#7a2530"/>
+    <path d="M7 26h4.5L31.5 6h-4.5Z" fill="#7a2530"/>
+    <path d="M16 26h4.5L40.5 6h-4.5Z" fill="#7a2530"/>
+    <path d="M25 26h4.5L49.5 6h-4.5Z" fill="#7a2530"/>
+  </g>
+
+  <!-- Tampas em latao -->
+  <rect x="7.5" y="2.5" width="17" height="4.5" rx="2.25" fill="#c79a6b"/>
+  <rect x="7.5" y="25" width="17" height="4.5" rx="2.25" fill="#c79a6b"/>
+</svg>

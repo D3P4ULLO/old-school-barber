@@ -1,0 +1,12 @@
+.pole {
+  height: 6px;
+  width: 100%;
+  /* Listras diagonais nas cores do post vintage: oxblood / creme / navy */
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--oxblood) 0 14px,
+    var(--cream) 14px 22px,
+    var(--navy) 22px 36px,
+    var(--cream) 36px 44px
+  );
+}

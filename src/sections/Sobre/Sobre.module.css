@@ -1,0 +1,75 @@
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+
+@media (max-width: 860px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+.photoWrap {
+  width: 100%;
+}
+
+/* A foto é mais alongada que a moldura 4/5, então o `cover` precisa descartar
+   uma faixa da altura. Ancorar em 30% joga esse descarte para a base — onde só
+   há a capa preta — em vez de repartir e comer o topo da cabeça do barbeiro. */
+.photoWrap img {
+  object-position: center 30%;
+}
+
+/* Coluna de texto (eyebrow, título, parágrafos e a linha de estatísticas) */
+.text {
+  min-width: 0;
+}
+
+.title {
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  margin: 14px 0 20px;
+}
+
+.paragraph {
+  color: var(--text-dim);
+  margin-bottom: 16px;
+  font-size: 0.98rem;
+}
+
+.statsRow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-top: 40px;
+}
+
+@media (max-width: 640px) {
+  .statsRow {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+  }
+}
+
+.stat {
+  border-left: 2px solid var(--oxblood);
+  padding-left: 16px;
+}
+
+.num {
+  font-family: var(--font-display);
+  font-size: 2.3rem;
+  color: var(--brass);
+  line-height: 1;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  margin-top: 6px;
+}

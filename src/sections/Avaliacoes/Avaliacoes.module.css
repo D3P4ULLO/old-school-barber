@@ -1,0 +1,126 @@
+.head {
+  margin-bottom: 56px;
+}
+
+.title {
+  font-size: clamp(2rem, 4.5vw, 3.4rem);
+  margin-top: 14px;
+}
+
+/* ===== Trilho do carrossel (scroll nativo + scroll-snap) =====
+   O scroll é do navegador: arrastar, swipe e roda do mouse funcionam sem JS.
+   O hook useCarousel só comanda as setas e o autoplay. */
+.track {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  /* Alinha o snap respeitando o padding lateral do trilho */
+  scroll-padding-inline: 4px;
+  padding: 4px;
+  /* Esconde a barra de rolagem sem perder a rolagem em si */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.track::-webkit-scrollbar {
+  display: none;
+}
+
+.slide {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  display: flex;
+}
+
+/* Responsividade: 1 no mobile, 2 no tablet, 3 no desktop.
+   O cálculo desconta o gap para os cards não estourarem o trilho. */
+@media (min-width: 600px) {
+  .slide {
+    flex-basis: calc((100% - 24px) / 2);
+  }
+}
+
+@media (min-width: 900px) {
+  .slide {
+    flex-basis: calc((100% - 48px) / 3);
+  }
+}
+
+.card {
+  border: 1px solid var(--line);
+  padding: 32px;
+  border-radius: var(--radius);
+  background: var(--bg-alt);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Brass em vez de navy: o navy dava 1.9:1 de contraste sobre o fundo escuro
+   e as estrelas ficavam praticamente invisíveis. */
+.stars {
+  color: var(--brass);
+  letter-spacing: 3px;
+  margin-bottom: 14px;
+}
+
+.quote {
+  color: var(--text-dim);
+  font-size: 0.92rem;
+  margin-bottom: 22px;
+  font-style: italic;
+  flex: 1;
+}
+
+.author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.name {
+  font-size: 0.86rem;
+  font-weight: 600;
+  font-style: italic;
+  color: var(--cream);
+}
+
+/* Setas de navegação */
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 90px;
+  margin-top: 30px;
+}
+
+.arrow {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cream);
+  transition:
+    border-color var(--dur-fast),
+    opacity var(--dur-fast);
+}
+
+.arrow:hover:not(:disabled) {
+  border-color: var(--oxblood);
+}
+
+.arrow:disabled {
+  opacity: 0.35;
+  cursor: default;
+}

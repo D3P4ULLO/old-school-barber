@@ -1,0 +1,29 @@
+.bar {
+  display: none;
+}
+
+/* Só existe no mobile */
+@media (max-width: 640px) {
+  .bar {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 950;
+    padding: 14px 20px;
+
+    /* Safe area. O espaço antes do `env()` é obrigatório: `+env(...)` é
+       sintaxe inválida e fazia o navegador descartar a declaração inteira. */
+    padding-bottom: calc(14px + env(safe-area-inset-bottom));
+    background: rgba(20, 16, 13, 0.96);
+    border-top: 1px solid var(--line);
+    backdrop-filter: blur(10px);
+  }
+}
+
+/* Aparência vem da `.btn` global. Aqui só o `flex: 1`, que faz o CTA
+   dividir a barra com o botão de ligar. */
+.cta {
+  flex: 1;
+}

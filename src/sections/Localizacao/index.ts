@@ -1,0 +1,1 @@
+export { Localizacao } from "./Localizacao";

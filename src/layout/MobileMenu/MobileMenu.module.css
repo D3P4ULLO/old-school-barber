@@ -1,0 +1,79 @@
+/* Fundo escurecido */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1001;
+  background: rgba(10, 8, 6, 0.6);
+  backdrop-filter: blur(2px);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--dur-base) var(--ease),
+    visibility var(--dur-base) var(--ease);
+}
+
+.backdropOpen {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Painel Lateral que desliza */
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  /* Precisa ocupar a altura toda: só com `top: 0` o painel terminava na
+     altura do conteúdo e deixava uma faixa da página aparecendo embaixo. */
+  bottom: 0;
+  z-index: 1002;
+  width: min(78vw, 340px);
+  background: var(--leather);
+  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5);
+  padding: 110px 32px 40px;
+  /* Respeita o entalhe/barra inferior do iOS */
+  padding-bottom: calc(40px + env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  transform: translateX(100%);
+  transition: transform var(--dur-slow) var(--ease);
+}
+
+.drawerOpen {
+  transform: translateX(0);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  margin-bottom: 40px;
+}
+
+.link {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  transition: color var(--dur-fast);
+}
+
+.link:hover {
+  color: var(--cream);
+}
+
+/* Aparência vem da `.btn` global. Aqui fica só o posicionamento: o
+   `margin-top: auto` empurra o CTA para o rodapé da gaveta. */
+.cta {
+  margin-top: auto;
+}
+
+/* Menu apenas existe no mobile. No Desktop a nav volta ao normal e o header assume */
+@media (min-width: 921px) {
+  .backdrop,
+  .drawer {
+    display: none;
+  }
+}

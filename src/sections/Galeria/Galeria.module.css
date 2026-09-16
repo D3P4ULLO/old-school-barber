@@ -1,0 +1,172 @@
+.head {
+  margin-bottom: 56px;
+}
+
+.title {
+  font-size: clamp(2rem, 4.5vw, 3.4rem);
+  margin-top: 14px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+@media (max-width: 920px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Cada item é um <button> (acessível por teclado por padrão) */
+.item {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  padding: 0;
+  display: block;
+}
+
+/* Zoom sutil da foto no hover (o PhotoPlaceholder já tem a transition) */
+.item:hover :global(.photo),
+.item:focus-visible :global(.photo) {
+  transform: scale(1.07);
+  filter: brightness(1.12);
+}
+
+/* Overlay com ícone de expandir, aparece no hover/foco */
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 16, 13, 0.35);
+  opacity: 0;
+  transition: opacity var(--dur-base);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cream);
+}
+
+.item:hover .overlay,
+.item:focus-visible .overlay {
+  opacity: 1;
+}
+
+.overlay svg {
+  width: 28px;
+  height: 28px;
+}
+
+/* ===== Lightbox ===== */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(10, 8, 6, 0.94);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+.close {
+  position: absolute;
+  top: 26px;
+  right: 32px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cream);
+}
+
+.lightboxInner {
+  position: relative;
+  max-width: 640px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  /* A moldura agora encolhe até a foto, então o conjunto precisa ser centrado
+     em vez de alinhado à esquerda. */
+  justify-content: center;
+  gap: 16px;
+}
+
+/* Na grade o recorte uniformiza os quadros; aqui o objetivo é o oposto —
+   ampliar. A moldura encolhe até o tamanho da foto (`fit-content`) em vez de
+   esticar, para não sobrar faixa vazia em volta de imagem em retrato. */
+.lightboxPhoto {
+  border: 1px solid var(--oxblood);
+  flex: 0 1 auto;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.lightboxPhoto img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  /* Desconta o respiro vertical do overlay para a foto nunca estourar a tela. */
+  max-height: calc(100vh - 140px);
+  object-fit: contain;
+}
+
+.nav {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cream);
+  background: rgba(20, 16, 13, 0.6);
+  transition: border-color var(--dur-fast);
+}
+
+.nav:hover {
+  border-color: var(--brass);
+}
+
+/* No mobile, as setas viram sobreposição nas laterais da foto — senão a foto
+   fica espremida entre os dois botões numa tela estreita. */
+@media (max-width: 560px) {
+  .lightbox {
+    padding: 20px;
+  }
+
+  .lightboxInner {
+    gap: 0;
+  }
+
+  .navPrev,
+  .navNext {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    width: 38px;
+    height: 38px;
+    background: rgba(20, 16, 13, 0.75);
+  }
+
+  .navPrev {
+    left: 10px;
+  }
+
+  .navNext {
+    right: 10px;
+  }
+}

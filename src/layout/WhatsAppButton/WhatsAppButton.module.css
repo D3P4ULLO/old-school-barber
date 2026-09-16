@@ -1,0 +1,58 @@
+.button {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 900;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #25d366;
+  /* Glifo branco sobre o verde: é como a marca do WhatsApp é aplicada.
+     Com o ícone escuro o botão virava uma mancha sobre o verde. */
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Sombra em duas camadas: um halo esverdeado que cola o botão na marca e uma
+     sombra neutra que o descola do fundo escuro do site. */
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.45),
+    0 0 0 6px rgba(37, 211, 102, 0.12);
+  transition:
+    transform var(--dur-fast) var(--ease),
+    box-shadow var(--dur-fast) var(--ease),
+    background var(--dur-fast);
+}
+
+.button:hover {
+  background: #1fbe5a;
+  transform: scale(1.06);
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.5),
+    0 0 0 10px rgba(37, 211, 102, 0.16);
+}
+
+.button:active {
+  transform: scale(0.97);
+}
+
+.button svg {
+  width: 28px;
+  height: 28px;
+}
+
+/* No mobile, sobe para não colidir com a barra de CTA fixa (StickyMobileCTA)
+   no rodapé da tela, respeitando também a safe area do iOS. */
+@media (max-width: 640px) {
+  .button {
+    right: 20px;
+    bottom: calc(86px + env(safe-area-inset-bottom));
+    width: 52px;
+    height: 52px;
+  }
+
+  .button svg {
+    width: 26px;
+    height: 26px;
+  }
+}
